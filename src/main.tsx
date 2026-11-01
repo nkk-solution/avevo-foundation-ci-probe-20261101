@@ -27,3 +27,5 @@ function App() {
 
 const root = document.getElementById("root");
 if (root) createRoot(root).render(<StrictMode><App /></StrictMode>);
+
+const deliberatelyBroken: number = "synthetic type error";
