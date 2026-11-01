@@ -3,11 +3,13 @@ import { expect, test } from "@playwright/test";
 test("information can be opened and closed with the keyboard", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Ditt nästa kundprojekt");
-  const button = page.getByRole("button", { name: "Visa information" });
+  const button = page.getByRole("button", { name: /^(Visa|Dölj) information$/ });
+  await expect(button).toHaveAccessibleName("Visa information");
   await page.keyboard.press("Tab");
   await expect(button).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(button).toHaveAttribute("aria-expanded", "true");
+  await expect(button).toHaveAccessibleName("Dölj information");
   await expect(page.locator("#demo-details")).toBeVisible();
   await page.keyboard.press("Space");
   await expect(button).toHaveAttribute("aria-expanded", "false");
